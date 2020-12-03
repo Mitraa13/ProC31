@@ -60,9 +60,9 @@ function draw(){
     plinkos.push(new Plinkos(p,75,10));
   }
 
-  for(var p = 0; p<Plinkos.length; p=p++){
-    plinkos[p].display();
-  }
+  //for(var p = 0; p<Plinkos.length; p=p++){
+    //plinkos[p].display();
+  //}
 
   if(frameCount%60===0){
     particles.push(new Particles(random(width/2-10 , width/2+10), 10 ,10))
