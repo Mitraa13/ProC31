@@ -3,87 +3,75 @@ const World= Matter.World;
 const Bodies = Matter.Bodies;
 const Constraint = Matter.Constraint;
 
-var gameState = "onsling";
+var engine,world;
+var bground,tground,lground,rground,Ground;
+var d1,d2,d3,d4,d5,d6,d7;
 
-var engine, world;
-var box1, pig1,pig3;
-var backgroundImg,platform;
-var bird, slingshot;
+var particles = [];
+var plinkos = [];
+var divisions = [];
 
-
-function preload() {
-    backgroundImg = loadImage("sprites/bg.png");
-}
+var divisionHeight = 300;
 
 function setup(){
-    var canvas = createCanvas(1200,400);
-    engine = Engine.create();
-    world = engine.world;
+  var canvas = createCanvas(515,800);
+  engine = Engine.create();
+  world = engine.world;
 
+  bground = new ground(width/2,800,width,10);
+  tground = new ground(width/2,0,width+20,10);
+  lground = new ground(0,height/2,10,height);
+  rground = new ground(515,height/2,10,height);
 
-    ground = new Ground(600,height,1200,20);
-    platform = new Ground(150, 305, 300, 170);
+  Ground = new ground(width/2,792,width,10);
 
-    box1 = new Box(700,320,70,70);
-    box2 = new Box(920,320,70,70);
-    pig1 = new Pig(810, 350);
-    log1 = new Log(810,260,300, PI/2);
+  d1 = new Divisions(5,650,10,divisionHeight);
+  d2 = new Divisions(85,650,10,divisionHeight);
+  d3 = new Divisions(170,650,10,divisionHeight);
+  d4 = new Divisions(255,650,10,divisionHeight);
+  d5 = new Divisions(340,650,10,divisionHeight);
+  d6 = new Divisions(425,650,10,divisionHeight);
+  d7 = new Divisions(510,650,10,divisionHeight);
 
-    box3 = new Box(700,240,70,70);
-    box4 = new Box(920,240,70,70);
-    pig3 = new Pig(810, 220);
-
-    log3 =  new Log(810,180,300, PI/2);
-
-    box5 = new Box(810,160,70,70);
-    log4 = new Log(760,120,150, PI/7);
-    log5 = new Log(870,120,150, -PI/7);
-
-    bird = new Bird(200,50);
-
-    slingshot = new SlingShot(bird.body,{x:200, y:50});
 }
 
 function draw(){
-    background(backgroundImg);
-    Engine.update(engine);
-    box1.display();
-    box2.display();
-    ground.display();
-    pig1.display();
-    log1.display();
+  background(0);
+  Engine.update(engine);
 
-    box3.display();
-    box4.display();
-    pig3.display();
-    log3.display();
+  d1.display();
+  d2.display();
+  d3.display();
+  d4.display();
+  d5.display();
+  d6.display();
+  d7.display();
 
-    box5.display();
-    log4.display();
-    log5.display();
+  stroke("black");
+  fill(255,255,255);
+  Ground.display();
+  fill("brown");
+  bground.display();
+  tground.display();
+  lground.display();
+  rground.display();
 
-    bird.display();
-    platform.display();
-    //log6.display();
-    slingshot.display();    
+  for(var p = 40; p<=width; p=p+50){
+    plinkos.push(new Plinkos(p,75,10));
+  }
+
+  for(var p = 0; p<Plinkos.length; p=p++){
+    plinkos[p].display();
+  }
+
+  if(frameCount%60===0){
+    particles.push(new Particles(random(width/2-10 , width/2+10), 10 ,10))
+  }
+
+  //for(var p = 0; p<Particles.length; p=p++){
+    //particles[p].display();
+  //}
+
+
+   
 }
-
-
-    function mouseDragged(){
-        if(gameState!=="launched"){           
-            Matter.Body.setPosition(bird.body, {x: mouseX , y: mouseY});             
-        }
-    }
-
-
-
-    function mouseReleased(){
-        slingshot.fly();
-        gameState="launched";
-    }
-
-//function keyPressed(){
-   //if(keyCode === 32){
-        //slingshot.attach(bird.body);
-   //}
-//}
