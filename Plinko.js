@@ -1,10 +1,10 @@
 class Plinkos{
-    constructor(x, y, radius) {
+    constructor(x, y) {
         var options = {
             'isStatic':true
         }
-        this.body = Bodies.circle(x, y, radius, options);
-        this.radius = radius
+        this.body = Bodies.circle(x, y, 10, options);
+        this.radius = 10
         World.add(world, this.body);
       }
       display(){
@@ -13,7 +13,8 @@ class Plinkos{
         translate(this.body.position.x, this.body.position.y);
         rotate(angle);
         ellipseMode(CENTER);
-        ellipse(0, 0, 10);
+        fill("white");
+        ellipse(0, 0, this.radius);
         pop();
       }
 }
